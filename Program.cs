@@ -1,4 +1,9 @@
+using CalculatorASPWebApp.CustomMiddlewares;
+
 var builder = WebApplication.CreateBuilder(args);
+
+//provides instance using DI
+builder.Services.AddTransient<MyMiddleware>();
 
 //Creates an instance of our web application.
 var app = builder.Build();
@@ -27,7 +32,11 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
     await context.Response.WriteAsync("End  : Middleware_2\n");
 });
 
-//Middleware 3
+//Middleware 3 - custom middleware
+app.UseMiddleware<MyMiddleware>();
+
+
+//Middleware 4
 //Its a Treminal middleware aks ShortCircuiting middleware
 app.Run(async (HttpContext context) =>
 {
