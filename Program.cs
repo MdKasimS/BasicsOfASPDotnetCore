@@ -32,18 +32,32 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
     await context.Response.WriteAsync("End  : Middleware_2\n");
 });
 
-//Middleware 3 - custom middleware
+//Middleware 3 - "Custom Middleware"
 //app.UseMiddleware<MyMiddleware>();
 //Implemented extension to custom middleware so IntelliSense access it as method
 app.MyMiddleware();
 
 
 //Middleware 4
+app.UseWhen(context => context.Request.Query.ContainsKey("IsAuthorized")
+    && context.Request.Query["IsAuthorized"]=="true"
+, app =>
+{
+    app.Use(async (context, next) =>
+    {
+        await context.Response.WriteAsync("Begin: Middleware_4\n");
+        await next(context);
+        await context.Response.WriteAsync("End  : Middleware_4\n");
+
+    });
+} );
+
+//Middleware 5
 //Its a Treminal middleware aks ShortCircuiting middleware
 app.Run(async (HttpContext context) =>
 {
-    await context.Response.WriteAsync("Begin: Middleware_3\n");
-    await context.Response.WriteAsync("End  : Middleware_3\n");
+    await context.Response.WriteAsync("Begin: Middleware_5\n");
+    await context.Response.WriteAsync("End  : Middleware_5\n");
 });
 
 
