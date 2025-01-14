@@ -1,7 +1,6 @@
 using CalculatorASPWebApp.CustomMiddlewares;
 
 var builder = WebApplication.CreateBuilder(args);
-
 //provides instance using DI
 builder.Services.AddTransient<MyMiddleware>();
 
@@ -16,9 +15,7 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
 
     //RequestDelegate next is the next() of middleware
     await next(context);
-
     await context.Response.WriteAsync("End  : Middleware_1\n");
-
 });
 
 //Middleware 2
@@ -59,6 +56,4 @@ app.Run(async (HttpContext context) =>
     await context.Response.WriteAsync("Begin: Middleware_5\n");
     await context.Response.WriteAsync("End  : Middleware_5\n");
 });
-
-
 app.Run();
