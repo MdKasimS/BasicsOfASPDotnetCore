@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.Primitives;
+
 
 /*
  * is used in ASP.NET Core to set up and configure your web application. This is a convenience class provided by ASP.NET Core to configure and create applications.
@@ -9,6 +12,8 @@
  * B] Registers Services: It streamlines the addition of essential services (like DI, logging, and routing) to your app.
  * C] Builds the App: It simplifies the creation of the WebApplication object, which is essential to actually running your application.
  */
+using System.Xml.Linq;
+
 var builder = WebApplication.CreateBuilder(args);
 
 /*
@@ -46,7 +51,8 @@ var app = builder.Build();
 
 app.Run(async (HttpContext context)=>
 {
-    string path = context.Request.Path.Value ?? string.Empty;
+    string path = context.Request.Path;
+    string method = context.Request.Method;
 
     //check case sensitivity for Home and home
     //not handling /home/ or say /product/
@@ -60,21 +66,45 @@ app.Run(async (HttpContext context)=>
         context.Response.StatusCode = 200;
         await context.Response.WriteAsync("You are in Contact Page.");
     }
-    else if (path == "/Product" || path == "/product")
+    else if (method=="GET" && (path == "/Product" || path == "/product"))
     {
         //You have to set the response before sending the body
         context.Response.StatusCode = 200;
 
-        if(context.Request.Query.ContainsKey("id") &&
-            context.Request.Query.ContainsKey("name"))
+        if(context.Request.Query.ContainsKey("id")
+            && context.Request.Query.ContainsKey("name"))
         {
             string id = context.Request.Query["id"];
             string name = context.Request.Query["name"];
-            await context.Response.WriteAsync($"You selected with product id:{id} and {name}");
+            await context.Response.WriteAsync($"You selected with product id={id} and {name}");
 
             return;
         }
+        
         await context.Response.WriteAsync("You are in Product Page.");
+    }
+    else if (method=="POST" && (path == "/Product" || path == "/product"))
+    {
+        string id = "";
+        string name = "";
+        context.Response.StatusCode = 200;
+
+        StreamReader reader = new StreamReader(context.Request.Body);
+        string data = await reader.ReadToEndAsync();
+
+        Dictionary<string,StringValues> dict = QueryHelpers.ParseQuery(data);
+
+        if (dict.ContainsKey("id"))
+        {
+            id = dict["id"];
+        }
+
+        if (dict.ContainsKey("name"))
+        {
+            name = dict["name"];
+        }
+        await context.Response.WriteAsync($"Request Body Contains: \n id= {id} & name= {name}");
+
     }
     else
     {
