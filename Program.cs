@@ -31,15 +31,16 @@ app.MapGet("/", (HttpContext context) =>
     //string method = context.Request.Method;
     //int status = context.Response.StatusCode;
 
-    var UserAgent = "";
-    if (context.Request.Headers.ContainsKey("User-Agent"))
-    {
-        //All keys are going to be string in headers
-        UserAgent = context.Request.Headers["User-Agent"];
-    }
+    //var UserAgent = "";
+    //if (context.Request.Headers.ContainsKey("User-Agent"))
+    //{
+    //    //All keys are going to be string in headers
+    //    UserAgent = context.Request.Headers["User-Agent"];
+    //}
 
-    context.Response.StatusCode = 200;
-    return $"user Agent : {UserAgent}";
+    //context.Response.StatusCode = 200;
+
+    return $"This is text response";
 });
 
 app.Run();
