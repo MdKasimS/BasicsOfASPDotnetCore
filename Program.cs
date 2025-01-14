@@ -1,6 +1,7 @@
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
+
 /*
  * ASP.NET Core is crucial for setting up routing in your web application.
  * UseRouting adds the routing middleware to the application's request pipeline. 
@@ -13,6 +14,11 @@ var app = builder.Build();
  * 
  */
 app.UseRouting();
+
+app.Use(async (context, next) => {
+    Endpoint endpoint = context.GetEndpoint();
+    await next(context);
+});
 
 app.UseEndpoints(endpoint =>
 {
