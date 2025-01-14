@@ -16,4 +16,14 @@ namespace CalculatorASPWebApp.CustomMiddlewares
 
         }
     }
+
+    public static class MyMiddlewareExtension
+    { 
+        public static IApplicationBuilder MyMiddleware(this IApplicationBuilder app)
+        {
+            return app.UseMiddleware<MyMiddleware>();
+        }
+    }
+
 }
+

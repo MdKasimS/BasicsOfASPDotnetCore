@@ -33,7 +33,9 @@ app.Use(async (HttpContext context, RequestDelegate next) =>
 });
 
 //Middleware 3 - custom middleware
-app.UseMiddleware<MyMiddleware>();
+//app.UseMiddleware<MyMiddleware>();
+//Implemented extension to custom middleware so IntelliSense access it as method
+app.MyMiddleware();
 
 
 //Middleware 4
