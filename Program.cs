@@ -25,13 +25,19 @@ app.UseEndpoints(endpoint =>
 
     endpoint.MapGet("/Product", async (context) =>
     {
-        await context.Response.WriteAsync($"You are in Products Page.");
+        await context.Response.WriteAsync($"You are in Products Page. GET");
+    });
+
+    endpoint.MapPost("/Product", async (context) =>
+    {
+        await context.Response.WriteAsync($"You are in Products Page. POST");
     });
 
     endpoint.MapPost("/Contact", async (context) =>
     {
         await context.Response.WriteAsync($"You are in Contact Page.");
     });
+
 });
 
 app.Run(async (HttpContext context) => { 
