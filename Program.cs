@@ -27,20 +27,21 @@ var app = builder.Build();
  */
 app.MapGet("/", (HttpContext context) =>
 {
-    //string path = context.Request.Path;
-    //string method = context.Request.Method;
-    //int status = context.Response.StatusCode;
+    /*string path = context.Request.Path;
+     * string method = context.Request.Method;
+     * int status = context.Response.StatusCode;
+     */
+    /*var UserAgent = "";
+     *if (context.Request.Headers.ContainsKey("User-Agent"))
+     *{
+     *    //All keys are going to be string in headers
+     *    UserAgent = context.Request.Headers["User-Agent"];
+     *    context.Response.StatusCode = 200;
+     */
 
-    //var UserAgent = "";
-    //if (context.Request.Headers.ContainsKey("User-Agent"))
-    //{
-    //    //All keys are going to be string in headers
-    //    UserAgent = context.Request.Headers["User-Agent"];
-    //}
-
-    //context.Response.StatusCode = 200;
-
-    return $"This is text response";
+    context.Response.Headers["Content-Type"] = "text/html";
+    context.Response.Headers["MyHeader"] = "Hello World!";
+    return $"<h2>This is text response</h2>";
 });
 
 app.Run();
