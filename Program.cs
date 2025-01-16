@@ -21,7 +21,7 @@ app.UseEndpoints(endpoint =>
         }
     });
 
-    endpoint.MapGet("/books/{authorName='kasim'}/{bookId?}", async (context2) =>
+    endpoint.MapGet("/books/{authorName:alpha:minlength(5)}/{bookId:int}", async (context2) =>
     {
         var Author = context2.Request.RouteValues["authorName"].ToString();
         var BookId = context2.Request.RouteValues["bookId"];
