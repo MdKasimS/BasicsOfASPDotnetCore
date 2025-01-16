@@ -1,11 +1,9 @@
 using CalculatorASPWebApp.CustomRouteConstraint;
-
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRouting(options =>
 {
     options.ConstraintMap.Add("alphanumeric", typeof(AlphaNumericRouteConstraint));
 });
-
 var app = builder.Build();
 app.UseRouting();
 
