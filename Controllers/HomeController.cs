@@ -7,11 +7,28 @@ namespace CalculatorASPWebApp.Controllers
     {
         [Route("Home")]
         [Route("/")]
-        public string Index()
+        public IActionResult Index()
         {
-            return "Welcome To Home Controller";
+            return new ContentResult()
+            {
+                Content = "Welcome To Home Controller",
+                ContentType = "text/html"
+            };
+
         }
 
+        [Route("/Employee/John")]
+        public IActionResult Employee()
+        {
+            Employee emp = new Employee()
+            {
+                Id = 101,
+                Age = 27,
+                Name = "John Miller",
+                Salary = 210000
+            };
+            return Json(emp);//, "application/json");
+        }
         [Route("About")]
         public string About()
         {
@@ -30,18 +47,6 @@ namespace CalculatorASPWebApp.Controllers
             return "You are in Products Page.";
         }
 
-        [Route("/Employee/John")]
-        public JsonResult Employee()
-        {
-            Employee emp = new Employee()
-            {
-                Id = 101,
-                Age = 27,
-                Name = "John Miller",
-                Salary = 210000
-            };
-            return Json(emp);//, "application/json");
-        }
     }
 }
 
