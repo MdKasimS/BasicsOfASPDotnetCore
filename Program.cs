@@ -5,7 +5,7 @@ var app = builder.Build();
 app.UseRouting();
 app.UseEndpoints(endpoint =>
 {
-    endpoint.MapGet("/products/id/{id?}", async (context) =>
+    endpoint.MapGet("/products/id/{id=100}", async (context) =>
     {
         var id = context.Request.RouteValues["id"];
 
@@ -21,11 +21,20 @@ app.UseEndpoints(endpoint =>
         }
     });
 
-    endpoint.MapGet("/books/{authorName='kasim'}/{bookId=100}", async (context) =>
+    endpoint.MapGet("/books/{authorName='kasim'}/{bookId?}", async (context) =>
     {
-        var BookId = Convert.ToInt32(context.Request.RouteValues["bookId"]);
         var Author = context.Request.RouteValues["authorName"].ToString();
-        await context.Response.WriteAsync($"Book Details\n Id: {BookId} \n Author Name :{Author}\n");
+        var BookId = context.Request.RouteValues["bookId"];
+        if (BookId != null)
+        {
+            BookId = Convert.ToInt32(BookId);
+            await context.Response.WriteAsync($"Book Details\n Id: {BookId} \n Author Name :{Author}\n");
+
+        }
+        else
+        {
+            await context.Response.WriteAsync($"Displaying All Books By {Author}:-");
+        }
     });
 });
 
