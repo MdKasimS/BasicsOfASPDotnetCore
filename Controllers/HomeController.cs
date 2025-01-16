@@ -1,10 +1,11 @@
 ﻿//using Microsoft.AspNetCore.Components;
+using CalculatorASPWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CalculatorASPWebApp.Controller
+namespace CalculatorASPWebApp.Controllers
 {
-    
-    public class HomeController
+
+    public class HomeController : Controller
     {
         [Route("Home")]
         public string Index()
@@ -30,7 +31,20 @@ namespace CalculatorASPWebApp.Controller
             return "You are in Products Page.";
         }
 
-        
+        [Route("/Employee/John")]
+        public JsonResult Employee()
+        {
+            Employee emp = new Employee()
+            {
+                Id = 101,
+                Age = 27,
+                Name = "John Miller",
+                Salary = 2100000
+            };
+
+
+            return JsonResult(emp, "application/json");
+        }
 
     }
 }
