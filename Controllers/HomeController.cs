@@ -6,6 +6,7 @@ namespace CalculatorASPWebApp.Controllers
     public class HomeController : Controller
     {
         [Route("Home")]
+        [Route("/")]
         public string Index()
         {
             return "Welcome To Home Controller";
