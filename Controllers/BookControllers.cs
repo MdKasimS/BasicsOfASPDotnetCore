@@ -6,9 +6,15 @@ namespace CalculatorASPWebApp.Controllers
     {
         //Books?IsLogged=true?BookId=200
         [Route("/Books")]
-        public IActionResult Book()
+        public IActionResult Books()
         {
-            return RedirectToAction("Books", "Store", new { });
+            int bookId = Convert.ToInt32(Request.Query["BookId"]);
+            bool isLogged = Convert.ToBoolean(Request.Query["IsLogged"]);
+            //301 - Move Permanently
+            //302 - Found(Move Permanently)
+            //return RedirectToAction("Books", "Store", new { });
+            //return LocalRedirect($"/category/books/{isLogged}/{bookId}");
+            return Redirect($"www.google.com");
         }
     }
 }
