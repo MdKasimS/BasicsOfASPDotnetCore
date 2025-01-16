@@ -43,7 +43,7 @@ namespace CalculatorASPWebApp.Controllers
             };
 
 
-            return JsonResult(emp, "application/json");
+            return new JsonResult(emp, "application/json");
         }
 
     }
