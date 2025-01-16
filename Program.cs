@@ -5,13 +5,23 @@ var app = builder.Build();
 app.UseRouting();
 app.UseEndpoints(endpoint =>
 {
-    endpoint.MapGet("/products/{id}", async (context) =>
+    endpoint.MapGet("/products/id/{id?}", async (context) =>
     {
-        var id = Convert.ToInt32(context.Request.RouteValues["id"]);
-        await context.Response.WriteAsync($"This is product id = {id}");
+        var id = context.Request.RouteValues["id"];
+
+        if (id != null)
+        {
+            id = Convert.ToInt32(id);
+            await context.Response.WriteAsync($"This is product id = {id}");
+
+        }
+        else
+        {
+            await context.Response.WriteAsync($"You are in Products Page.");
+        }
     });
 
-    endpoint.MapGet("/books/{bookId}/{authorName}", async (context) =>
+    endpoint.MapGet("/books/{authorName='kasim'}/{bookId=100}", async (context) =>
     {
         var BookId = Convert.ToInt32(context.Request.RouteValues["bookId"]);
         var Author = context.Request.RouteValues["authorName"].ToString();
