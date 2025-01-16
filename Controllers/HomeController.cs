@@ -1,10 +1,8 @@
-﻿//using Microsoft.AspNetCore.Components;
-using CalculatorASPWebApp.Models;
+﻿using CalculatorASPWebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CalculatorASPWebApp.Controllers
 {
-
     public class HomeController : Controller
     {
         [Route("Home")]
@@ -39,13 +37,10 @@ namespace CalculatorASPWebApp.Controllers
                 Id = 101,
                 Age = 27,
                 Name = "John Miller",
-                Salary = 2100000
+                Salary = 210000
             };
-
-
-            return new JsonResult(emp, "application/json");
+            return Json(emp);//, "application/json");
         }
-
     }
 }
 
