@@ -1,6 +1,14 @@
+using CalculatorASPWebApp.CustomRouteConstraint;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddRouting(options =>
+{
+    options.ConstraintMap.Add("alphanumeric", typeof(AlphaNumericRouteConstraint));
+});
+
 var app = builder.Build();
 app.UseRouting();
+
 app.UseEndpoints(endpoint =>
 {
     endpoint.MapGet("/books/{id:int}", async (context1) =>
@@ -44,9 +52,16 @@ app.UseEndpoints(endpoint =>
     endpoint.MapGet("/daily-results/{date:regex(^(19|21)$)}", async (context1) =>
     {
         int year = Convert.ToInt32(context1.Request.RouteValues["year"]);
-        string month = (context1.Request.RouteValues["month"].ToString());
+        string month = context1.Request.RouteValues["month"].ToString();
         await context1.Response.WriteAsync($"Quarteyly Resulst For {year}-{month}");
     });
+
+    endpoint.MapGet("/user/{username:alphanumeric}", async (context) =>
+    {
+        string username = context.Request.RouteValues["username"].ToString();
+        await context.Response.WriteAsync($"Quarteyly Resulst For {username}");
+    });
+
 });
 app.Run(async (HttpContext context3) =>
 {
